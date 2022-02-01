@@ -80,7 +80,7 @@ def main(url: "Insert url to root directory" = None,
     if not author:
         author_input = input("Author (leave blank for default): ")
         if not author_input or author_input.isspace():  # If empty or just space characters
-            author = "Martin Johannes Nilsen"
+            author = DEFAULT_AUTHOR
         else:
             author = author_input
     if not date:
