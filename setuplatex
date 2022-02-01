@@ -10,7 +10,6 @@ DEFAULT_TEMPLATE = "assignment_report"
 
 
 def create_latex_file_based_on_template(url, subject, title, author, date, template_path):
-
     # Copy selected template to destination
     dst_path = url + "/report"
     shutil.copytree(template_path, dst_path)
