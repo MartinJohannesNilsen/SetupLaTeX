@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+from argh import dispatch_command
+import os
+import shutil
+import glob
+
+# Settings
+DEFAULT_AUTHOR = "Martin Johannes Nilsen"
+DEFAULT_TEMPLATE = "assignment_report"
+
+
+def create_latex_file_based_on_template(url, subject, title, author, date, template_path):
+
+    # Copy selected template to destination
+    dst_path = url + "/report"
+    shutil.copytree(template_path, dst_path)
+
+    # Create latex code for title page
+    latex_str = r"\title{" + subject + r"\\\vspace{1cm}" + \
+        title + r"}" + "\n" + fr"\author{{{author}}}"
+    if date:
+        latex_str += "\n" + fr"\date{{{date}}}"
+    latex_str += "\n" + r"\maketitle" + "\n" + r"\newpage" + "\n"
+
+    # Insert data inside main.tex
+    with open(f'{dst_path}/main.tex', 'r', encoding='utf-8') as file:
+        data = file.readlines()
+    data[5] = latex_str
+    with open(f'{dst_path}/main.tex', 'w', encoding='utf-8') as file:
+        file.writelines(data)
+
+
+def select_template(select_from_available: False):
+    """Select template for the report
+
+    Args:
+        default (False): Select the default template, else take user input.
+
+    Returns:
+        str: src path to selected template
+    """
+    # Select template if flag is raised, else use default
+    template_dir = os.path.dirname(os.path.abspath(__file__)) + r"/templates"
+    if select_from_available:
+        list_of_templates = glob.glob(os.path.join(template_dir, '*'))
+        visual_list = [x.split("/")[-1].replace("_", " ") for x in list_of_templates]
+        print("Available templates: ")
+        for i, template_name in enumerate(visual_list):
+            print(f" {i+1}: {template_name}")
+        while True:
+            try:
+                template_input = int(input(f"Select template [{1}{'-'+str(len(visual_list)) if len(visual_list) > 1 else ''}]: "))
+            except ValueError:  # just catch the exceptions you know!
+                print('That\'s not a number!')
+            else:
+                if 1 <= template_input <= len(visual_list):  # this is faster
+                    break
+                else:
+                    print('Out of range. Try again')
+        src_path = list_of_templates[template_input-1]
+    else:
+        src_path = template_dir + f"/{DEFAULT_TEMPLATE}"
+    print(f"Template: {src_path.split('/')[-1].replace('_', ' ')}")
+    return src_path
+
+
+def main(url: "Insert url to root directory" = None,
+         subject: "Insert subject" = None,
+         title: "Insert title" = None,
+         author: "Insert author" = None,
+         date: "Insert date" = None,
+         Template: "Set template" = False):
+    """Creates a clean LaTeX report based on template, and fills in title page."""
+    template_path = select_template(Template)
+    if not subject:
+        subject = input("Subject: ")
+    if not title:
+        title = input("Title: ")
+    if not url:
+        url = os.getcwd()
+    if not author:
+        author_input = input("Author (leave blank for default): ")
+        if not author_input or author_input.isspace():  # If empty or just space characters
+            author = "Martin Johannes Nilsen"
+        else:
+            author = author_input
+    if not date:
+        date_input = input("Date (leave blank for automatic insert): ")
+        if not date_input.isspace():  # If not just space characters, skip if empty
+            date = date_input
+
+    create_latex_file_based_on_template(url, subject, title, author, date, template_path)
+
+
+if __name__ == "__main__":
+    dispatch_command(main)
