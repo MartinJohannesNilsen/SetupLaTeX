@@ -103,6 +103,13 @@
     \newpage
     \pagenumbering{arabic}  % Setting page numbering to normal integers
 }
+% As I want to use the report class for its title page, I want to remove the chapter
+% Not part => chapter => section. I use section => subsection etc
+% Remove the chapter numbering.
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\thesection}{\arabic{section}}
 
 % --- Mathematics ---
 \usepackage{bm}     % Bold text in math mode
