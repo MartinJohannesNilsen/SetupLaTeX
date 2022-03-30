@@ -1,4 +1,4 @@
-<img src="https://firebasestorage.googleapis.com/v0/b/portfoliobymartinnilsen.appspot.com/o/Projects%2FsetupLatex.png?alt=media&token=850c745b-d9b6-41a6-a4b5-ccaff3f0523e" width="600" height="250" />
+<img src="https://firebasestorage.googleapis.com/v0/b/portfoliobymartinnilsen.appspot.com/o/Projects%2FsetupLatex.png?alt=media&token=92fb4997-c35b-4f1b-95d5-e5ef1d9ecd9a" width="600" height="250" />
 
 
 <center> 
