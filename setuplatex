@@ -9,9 +9,9 @@ DEFAULT_AUTHOR = "Martin Johannes Nilsen"
 DEFAULT_TEMPLATE = "assignment_report"
 
 
-def create_latex_file_based_on_template(url, subject, title, author, date, template_path):
+def create_latex_file_based_on_template(path, subject, title, author, date, template_path):
     # Copy selected template to destination
-    dst_path = url + "/report"
+    dst_path = path + "/report"
     shutil.copytree(template_path, dst_path)
 
     # Create latex code for title page
@@ -63,7 +63,7 @@ def select_template(select_from_available: False):
     return src_path
 
 
-def main(url: "Insert url to root directory" = None,
+def main(path: "Insert path to root directory" = None,
          subject: "Insert subject" = None,
          title: "Insert title" = None,
          author: "Insert author" = None,
@@ -75,8 +75,8 @@ def main(url: "Insert url to root directory" = None,
         subject = input("Subject: ")
     if not title:
         title = input("Title: ")
-    if not url:
-        url = os.getcwd()
+    if not path:
+        path = os.getcwd()
     if not author:
         author_input = input("Author (leave blank for default): ")
         if not author_input or author_input.isspace():  # If empty or just space characters
@@ -88,7 +88,7 @@ def main(url: "Insert url to root directory" = None,
         if not date_input.isspace():  # If not just space characters, skip if empty
             date = date_input
 
-    create_latex_file_based_on_template(url, subject, title, author, date, template_path)
+    create_latex_file_based_on_template(path, subject, title, author, date, template_path)
 
 
 if __name__ == "__main__":
