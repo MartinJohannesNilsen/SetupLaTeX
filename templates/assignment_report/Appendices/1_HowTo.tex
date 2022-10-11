@@ -1,0 +1,81 @@
+% Appendix in the format of \section{appendix_name} and subsections
+
+\section{Examples of floating environments}
+\label{appendix:floats}
+
+For referencing, simply use ''\textbackslash autoref\{\}'' for lowercase form, and ''\textbackslash Autoref\{\}'' for capitalized form. Note that floating environments will be capitalized with both commands.
+For referencing to an Appendix, use ''\textbackslash Appendixref\{\}''.
+
+%%%%%%%%%
+
+\subsection{Figures}
+\label{sec:figures}
+
+Referenced as \autoref{fig:my_figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/ntnu.png}
+    \caption{Example figure}
+    \label{fig:my_figure}
+\end{figure}
+
+%%%%%%%%%
+
+\subsection{Tables}
+Referenced as \autoref{tab:my-table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|cc|cc|cc|}
+        \hline
+        \multirow{2}{*}{\textbf{Object}} & \multicolumn{2}{c|}{\textbf{Max}}                     & \multicolumn{2}{c|}{\textbf{Min}}                     & \multicolumn{2}{c|}{\textbf{AVG}}                     \\ \cline{2-7} 
+                                        & \multicolumn{1}{c|}{\textbf{Width}} & \textbf{Height} & \multicolumn{1}{c|}{\textbf{Width}} & \textbf{Height} & \multicolumn{1}{c|}{\textbf{Width}} & \textbf{Height} \\ \hline
+        car                              & \multicolumn{1}{c|}{256.4}          & 126.5           & \multicolumn{1}{c|}{2.7}            & 3.7             & \multicolumn{1}{c|}{28.4}           & 26.1            \\ \hline
+        truck                            & \multicolumn{1}{c|}{355.2}          & 127.1           & \multicolumn{1}{c|}{8.3}            & 18.8            & \multicolumn{1}{c|}{56.1}           & 54.8            \\ \hline
+        bus                              & \multicolumn{1}{c|}{398.8}          & 128.0           & \multicolumn{1}{c|}{4.0}            & 5.4             & \multicolumn{1}{c|}{45.5}           & 38.7            \\ \hline
+        motorcycle                       & \multicolumn{1}{c|}{-}              & -               & \multicolumn{1}{c|}{-}              & -               & \multicolumn{1}{c|}{-}              & -               \\ \hline
+        bicycle                          & \multicolumn{1}{c|}{27.6}           & 33.8            & \multicolumn{1}{c|}{3.6}            & 6.0             & \multicolumn{1}{c|}{13.7}           & 20.6            \\ \hline
+        scooter                          & \multicolumn{1}{c|}{18.4}           & 43.6            & \multicolumn{1}{c|}{3.6}            & 15.0            & \multicolumn{1}{c|}{9.4}            & 29.6            \\ \hline
+        person                           & \multicolumn{1}{c|}{30.7}           & 82.3            & \multicolumn{1}{c|}{2.3}            & 7.9             & \multicolumn{1}{c|}{7.1}            & 26.7            \\ \hline
+        rider                            & \multicolumn{1}{c|}{46.2}           & 90.7            & \multicolumn{1}{c|}{2.0}            & 10.0            & \multicolumn{1}{c|}{8.4}            & 28.7            \\ \hline
+    \end{tabular}
+    \caption{Insert caption here}
+    \label{tab:my-table}
+\end{table}
+
+%%%%%%%%%
+
+\subsection{Equations}
+Referenced as \autoref{eq:my_equation}
+
+\begin{equation}
+\label{eq:my_equation}
+    2x + 5 = 10
+\end{equation}
+
+%%%%%%%%%
+
+\subsection{Algorithms}
+Referenced as \autoref{alg:my_algorithm}
+
+\begin{algorithm}
+    \caption{Text of the caption}
+    \begin{algorithmic}
+    \label{alg:my_algorithm}
+        \STATE  $\mathrm{train\_ANN} (f_i,w_i,o_j)$
+        \FOR{epochs = $1$ to $N$}
+            \WHILE{$(j\le m)$}
+                \STATE Randomly initialize $w_i=\{w_1,w_2,\dots,w_n\}$
+                \STATE input $o_j=\{o_1,o_2,\dots,o_m\}$ in the input layer
+                \STATE forward propagate $(f_i\cdot w_i)$ through layers until getting the predicted result $y$
+                \STATE compute $e=y-y^2$
+                \STATE back propagate $e$ from right to left through layers
+                \STATE update $w_i$
+            \ENDWHILE
+        \ENDFOR
+    \end{algorithmic}
+\end{algorithm}
+
+
+ 
+

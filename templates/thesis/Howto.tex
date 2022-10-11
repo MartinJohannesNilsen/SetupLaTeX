@@ -1,0 +1,97 @@
+% A document with the intention of displaying how to perform certain actions while writing
+
+%%%%%%%%%%%%%%%%%%%
+%%  Referencing  %%
+%%%%%%%%%%%%%%%%%%%
+
+% Bibliography - Full textual citation
+Example: "in Kofod-Petersen (2018)"
+\textcite{akp_science}
+
+% Bibliography - Reference to source, either with or without page
+Example: "(Kofod-Petersen, 2018, p. 2-10)"
+\autocite{akp_science}
+\autocite[p.~2]{akp_science}
+\autocite[p.~2-10]{akp_science}
+
+% Figures
+Example: "as seen in Figure 1.1"
+\Autoref{fig:keyword}
+
+% Tables
+Example: "as seen in Table 1.1"
+\Autoref{tab:keyword}
+
+% Equations
+Example: "as seen in Equation 1.1"
+\Autoref{eq:keyword}
+
+% Algorithms
+Example: "as seen in Algorithm 1.1"
+\Autoref{alg:keyword}
+
+% Sectioning
+Both chapters, sections, subsections and paragraphs can be referenced in text.
+Either use \Autoref for capitalized form, or \autoref for lowercase
+For referencing to Appendix, use \Appendixref
+
+
+%%%%%%%%%%%%%%%%
+%%  Glossary  %%
+%%%%%%%%%%%%%%%%
+\Gls{keyword} % Capitalize first letter
+\gls{keyword} % Standard
+
+
+%%%%%%%%%%%%%%%%%
+%%  Acronyms  %%
+%%%%%%%%%%%%%%%%%
+\acrshort{keyword}
+\acrfull{keyword}
+\acrlong{keyword}
+
+
+%%%%%%%%%%%%%%%
+%%  Figures  %%
+%%%%%%%%%%%%%%%
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/x.png}
+    \caption{Simple table} % No period in caption!
+    \Source{\url{http://google.com}}
+    \label{fig:my_label}
+\end{figure}
+
+
+%%%%%%%%%%%%%%
+%%  Tables  %%
+%%%%%%%%%%%%%%
+\begin{table}[h!]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Column 1} & \textbf{Row 1} \\ \hline
+            Row 2             & Column2        \\ \hline
+        \end{tabular}%
+    }
+    \caption{Simple table} % No period in caption!
+    \label{tab:simple-table}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%
+%%  Algorithm  %%
+%%%%%%%%%%%%%%%%%
+\begin{algorithm}
+    \caption{Algorithm caption} % Can be moved beneath algorithmic
+    \label{alg:algorithm-label} % Must be below caption
+    \begin{algorithmic}
+        ... Your pseudocode ...
+    \end{algorithmic}
+\end{algorithm}
+
+
+
+
+

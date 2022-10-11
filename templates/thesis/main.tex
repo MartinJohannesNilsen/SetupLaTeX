@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Created with SetupLatex                             %%
+%% Provided by Martin Johannes Nilsen                  %%
+%% https://github.com/MartinJohannesNilsen/SetupLaTeX  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, twoside]{report} % oneside removes odd page indent
+\usepackage{setup} % Own defined settings
+\import{}{glossaries}
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%
+%%   Formal   %%
+%%%%%%%%%%%%%%%%
+\import{Formal}{0_Title}
+\frontmatter
+\import{Formal}{1_Abstract}
+\import{Formal}{2_Sammendrag}
+\import{Formal}{3_Preface}
+\tableofcontents \clearpage
+\listoffigures \clearpage
+\listoftables \clearpage
+\printglossary[type=\acronymtype] \clearpage % Acronyms
+\printglossary % Glossary
+\afterpage{\blankpage} % Insert blank page
+\mainmatter % Start on main matter
+
+
+%%%%%%%%%%%%%%%%%%
+%%   Chapters   %%
+%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%% Chapter 1 %%%%%%%%%
+\clearpage\chapter{Introduction}
+\label{cha:Introduction}
+\import{Chapters}{1_Introduction}
+
+%%%%%%%%% Chapter 2 %%%%%%%%%
+\clearpage\chapter{Background Theory}
+\label{cha:BackgroundTheory}
+\import{Chapters}{2_Background_Theory}
+
+%%%%%%%%% Chapter 3 %%%%%%%%%
+\clearpage\chapter{Related Work} 
+\label{cha:RelatedWork}
+\import{Chapters}{3_Related_Work}
+
+%%%%%%%%% Chapter 4 %%%%%%%%%
+\clearpage\chapter{Evaluation and Discussion}
+\label{cha:EvaluationAndDiscussion}
+\import{Chapters}{4_Evaluation_and_Discussion}
+
+%%%%%%%%% Chapter 5 %%%%%%%%%
+\clearpage\chapter{Conclusion and Future Work}
+\label{cha:ConclusionAndFutureWork}
+\import{Chapters}{5_Conclusion_and_Future_Work}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%   Bibliography   %%
+%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[heading=bibintoc]
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%   Appendices   %%
+%%%%%%%%%%%%%%%%%%%%
+\addappendix
+\import{Appendices}{1_HowTo} 
+\import{Appendices}{2_Structure} 
+
+
+\end{document}

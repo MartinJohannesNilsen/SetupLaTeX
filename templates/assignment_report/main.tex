@@ -1,0 +1,52 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Created with SetupLatex                             %%
+%% Provided by Martin Johannes Nilsen                  %%
+%% https://github.com/MartinJohannesNilsen/SetupLaTeX  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+\usepackage{setup}
+\import{}{glossaries}
+\begin{document}
+
+
+%%%%%%%%%%%%%%%
+%%   Title   %%
+%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%
+%%   Formal   %%
+%%%%%%%%%%%%%%%%
+\frontmatter
+% \tableofcontents \clearpage
+% \listoffigures \clearpage
+% \listoftables \clearpage
+% \printglossary[type=\acronymtype] \clearpage % Acronyms
+% \printglossary % Glossary
+% \afterpage{\blankpage} % Insert blank page
+\mainmatter % Start on main matter
+
+
+%%%%%%%%%%%%%%%%%%
+%%   Sections   %%
+%%%%%%%%%%%%%%%%%%
+\import{Sections}{Tasks}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%   Bibliography   %%
+%%%%%%%%%%%%%%%%%%%%%%
+% \printbibliography[heading=bibintoc]
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%   Appendices   %%
+%%%%%%%%%%%%%%%%%%%%
+\addappendix
+\import{Appendices}{1_HowTo} 
+\import{Appendices}{2_Structure} 
+
+
+\end{document}

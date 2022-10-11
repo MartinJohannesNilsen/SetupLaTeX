@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+import os
+import shutil
+import glob
+import sys
+import click
+from pathlib import Path
+from dotenv import dotenv_values, set_key
+dotenv_path = Path(__file__).parent / ".env.local" if os.path.exists(Path(__file__).parent / ".env.local") else Path(__file__).parent / ".env"
+env = dotenv_values(dotenv_path)
+
+
+def create_latex_project_based_on_template(path, template_path, dst="report", create_title=False, subject=None, title=None, author=None, date=None):
+
+    # Find destination path
+    dst_path = Path(path) / dst
+
+    # Check if dst exist already
+    if os.path.exists(dst_path):
+        if not click.confirm(f'[WARNING] Directory "{dst}" already exists - overwrite?', default=None):
+            print("Aborted!")
+            return
+        shutil.rmtree(dst_path)
+
+    # Copy selected template to destination
+    shutil.copytree(template_path, dst_path)
+
+    if create_title:
+        # Create latex code for title page
+        latex_str = r"\title{" + subject + r"\\\vspace{1cm}" + \
+            title + r"}" + "\n" + fr"\author{{{author}}}"
+        if date:
+            latex_str += "\n" + fr"\date{{{date}}}"
+        latex_str += "\n" + r"\maketitle" + "\n" + r"\newpage" + "\n"
+
+        # Insert data inside main.tex
+        with open(f'{dst_path}/main.tex', 'r', encoding='utf-8') as file:
+            data = file.readlines()
+        data[15] = latex_str
+        with open(f'{dst_path}/main.tex', 'w', encoding='utf-8') as file:
+            file.writelines(data)
+
+    print("LaTeX project sucessfully created!")
+
+
+def select_template(select_from_available: False) -> Path:
+    """Select template for the report
+
+    Args:
+        default (False): Select the default template, else take user input.
+
+    Returns:
+        str: src path to selected template
+    """
+    # Select template if flag is raised, else use default
+    template_dir = Path(__file__).parent / "templates"
+    if select_from_available:
+        list_of_templates = glob.glob(str(template_dir / '*'))
+        visual_list = [Path(x).name.replace("_", " ") for x in list_of_templates]
+        print("Available templates: ")
+        for i, template_name in enumerate(visual_list):
+            print(f" {i+1}: {template_name}")
+        while True:
+            try:
+                template_input = int(input(f"Select template [{1}{'-'+str(len(visual_list)) if len(visual_list) > 1 else ''}]: "))
+            except ValueError:  # just catch the exceptions you know!
+                print('That\'s not a number!')
+            else:
+                if 1 <= template_input <= len(visual_list):  # this is faster
+                    break
+                else:
+                    print('Out of range. Try again')
+        src_path = Path(list_of_templates[template_input - 1])
+    else:
+        src_path = template_dir / env["default_template"]
+    return src_path
+
+
+@click.command()
+@click.option('-t', '--template', is_flag=True, help='Select which template to use.')
+@click.option('-p', '--path', default=os.getcwd(), help='Set output directory. Defaults to cwd.')
+@click.option('--subject', default=None, help='Insert subject (if report).')
+@click.option('--title', default=None, help='Insert title (if report).')
+@click.option('--author', default=None, help='Insert author (if report).')
+@click.option('--date', default=None, help='Insert date (if report).')
+@click.option('--set-default-author', is_flag=True, help='Set default author.')
+@click.option('--set-default-template', is_flag=True, help='Set default template.')
+@click.option('--show-default-configs', is_flag=True, help='Show default configurations.')
+def main(path: str, template: bool, subject: str, title: str, author: str, date: str, set_default_author: bool, set_default_template: bool, show_default_configs: bool):
+    """A command line interface for setting up LaTeX reports in no time. """
+
+    if show_default_configs:
+        for key, value in env.items():
+            print(f"{key.capitalize().replace('_', ' ')}: {value}")
+        sys.exit(0)
+
+    if set_default_template:
+        print(f'Current default template is "{env["default_template"]}"')
+        env["default_template"] = select_template(True).name
+        set_key(dotenv_path, "default_template", env["default_template"])
+        print(f'[SUCCESS] Updated default template to "{env["default_template"]}"')
+        sys.exit(0)
+
+    # Make sure defaults are configured correctly
+    if not env["default_author"].strip():  # Check if only whitespace (or empty), isspace() requires one whitespace character
+        print("Welcome to SetupLaTeX!\nLet's set you up as the default author")
+        env["default_author"] = click.prompt("Full name")
+        set_key(dotenv_path, "default_author", env["default_author"])
+        print(f'[SUCCESS] Set default author to "{env["default_author"]}"')
+        print("Happy LaTeXing!")
+        sys.exit(0)
+    elif set_default_author:
+        print(f'Current default author is "{env["default_author"]}"')
+        env["default_author"] = click.prompt("Set default author")
+        set_key(dotenv_path, "default_author", env["default_author"])
+        print(f'[SUCCESS] Updated default author to "{env["default_author"]}"')
+        sys.exit(0)
+
+    if not os.path.exists(path):
+        print(f'[ERROR] Directory "{path}" does not exist!\nAborted!')
+        sys.exit(1)
+
+    # Select template
+    template_path = select_template(template)
+    print(f"Template: {template_path.name.replace('_', ' ')}")
+
+    # Generate project based on template
+    if Path(template_path).name == "assignment_report":
+        if not subject:
+            subject = input("Subject: ")
+        if not title:
+            title = input("Title: ")
+        if not author:
+            author_input = input("Author (leave blank for default): ")
+            if not author_input or author_input.isspace():  # If empty or just space characters
+                author = env["default_author"]
+            else:
+                author = author_input.replace(" and ", r"\\")
+        if not date:
+            date_input = input("Date (leave blank for automatic insert): ")
+            if not date_input.isspace():  # If not just space characters, skip if empty
+                date = date_input
+        create_latex_project_based_on_template(path, template_path, "report", True, subject, title, author, date)
+
+    elif Path(template_path).name == "thesis":
+        create_latex_project_based_on_template(path, template_path, "thesis")
+
+
+if __name__ == "__main__":
+    main()

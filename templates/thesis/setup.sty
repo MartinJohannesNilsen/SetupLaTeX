@@ -1,0 +1,197 @@
+% If you want to use this to provide a package, include the following:
+% \NeedsTeXFormat{LaTeX2e}
+% \ProvidesPackage{<name>}[2022/03/26 package <name>]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   Imported Packages   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc} % Character encoding
+\usepackage[UKenglish]{babel} % Multilingual support. Some options are 'norsk', 'USenglish'/'english'/'american', 'UKenglish'/'british'
+\usepackage[T1]{fontenc} % Standard package for selecting font encodings
+\usepackage{lmodern} % The Latin Modern family of fonts (72 text fonts and 20 mathematics fonts)
+\usepackage{enumitem} % Control layout of itemize, enumerate, description
+\usepackage{keyval} % Process 'key=value' schemes
+\usepackage{xcolor} % Driver-independent color extensions
+\usepackage{tcolorbox} % Coloured boxes for LaTeX examples and theorems
+\usepackage{import} % \import{path}{file}, \include, \includegraphics
+\usepackage{csquotes} % Context sensitive quotation facilities
+\usepackage{hyperref} % Extensive support for hypertext
+\usepackage{appendix} % Extra control of appendices
+\usepackage{caption} % Customising captions in floating environments (tables, figures)
+\usepackage{subcaption} % Support for sub-captions
+\usepackage[nottoc]{tocbibind} % Add bibliography/contents to Table of Contents
+\usepackage{titlesec} % Select alternative section titles
+\usepackage{graphicx} % Enhanced support for graphics
+\usepackage{wrapfig} % Produces figures which text can flow around
+\usepackage{lscape} % Landscape page with \begin{landscape}
+\usepackage{float} % Improved interface for floating objects
+\usepackage{url} % Verbatim with URL-sensitive line breaks
+\usepackage{siunitx} % A comprehensive (SI) units package
+\usepackage{chngcntr} % Change the resetting of counters
+\usepackage{amsmath} % Display mathematical equations
+\usepackage{amssymb} % Provides tons of math symbols
+\usepackage{amsthm} % Typesetting theorems
+\usepackage{bm} % Access bold symbols in maths mode
+\usepackage{fancyhdr} % Extensive control of page headers and footers
+\usepackage{comment} % \comment ... \endcomment, \begin{comment} ... end{comment} will be excluded
+\usepackage{afterpage} % Needed for blankpage-generation
+\usepackage{multirow} % Create tabular cells spanning multiple rows
+% There are multiple packages available for algorithm handling (https://tex.stackexchange.com/a/230789)
+\usepackage{algorithm} % Create a float environment for algorithms, and additional \listofalgorithms
+\usepackage{algorithmic} % Algorithm typesetting environment
+% \usepackage{algorithmicx} % Algorithmic upgraded. Enables you to define custom commands
+% \usepackage{algpseudocode} % Layout for algorithmicx (no need to import algorithmicx)
+% \usepackage{algorithm2e} % New algorithm typesetting environment
+% For source code, there is two packages generally used
+\usepackage{listings} % Typeset source code listings solely based on TeX
+% \usepackage{minted} % Needs '-shell-escape' to be ran, but may offer more extensive source code parsing
+
+
+% ------ Contents -------
+% Appendix
+% Bibliography & References
+% Front matter
+% General
+% Main matter
+% Page setup
+% -----------------------
+
+
+%%%%%%%%%%%%%%%%%%
+%%   Appendix   %%
+%%%%%%%%%%%%%%%%%%
+% Create appendix
+\newcommand{\addappendix}{
+    \newpage
+    \appendix
+    % Set Appendices as chapter and all appendices as sections
+    \chapter*{Appendices}
+    \addcontentsline{toc}{chapter}{Appendices}
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+    \renewcommand{\thesection}{\Alph{section}} % Set section as start of numbering instead of chapters
+    \fancyhead[LE]{\nouppercase{\textit{Appendix \thesection}}} % Change leftmark to be "Appendix [A-Z]"
+}
+
+% Appendix referencing
+\newcommand{\Appendixref}[1]{%
+  \begingroup%
+  \def\sectionautorefname{Appendix}%
+  \def\subsectionautorefname{Appendix}%
+  \autoref{#1}%
+  \endgroup%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%   Bibliography   %%
+%%%%%%%%%%%%%%%%%%%%%%
+% Styles: nature, science, ieee, chicago-authordate, mla, apa
+\usepackage[backend = biber,
+            style = apa,
+            urldate = long,
+            maxcitenames = 2, % Max two authors before et. al.
+            giveninits=true, % Initials
+            ]{biblatex}
+
+\addbibresource{references.bib}
+%\DeclareNameAlias{default}{given-family} % Initials before surname
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%   Front matter   %%
+%%%%%%%%%%%%%%%%%%%%%%
+% Front matter is located before the table of contents, e.g. preface
+\newcommand{\frontmatter}{
+    \pagenumbering{roman} % Page numbering to lower-case roman
+}
+
+
+%%%%%%%%%%%%%%%%%%
+%%   General   %%
+%%%%%%%%%%%%%%%%%%
+
+% Define urlstyle
+\urlstyle{sf} % tt for monospace
+
+% Define colors for hyperlinks
+\hypersetup{
+    colorlinks,
+    citecolor = black,
+    filecolor = black,
+    linkcolor = black,
+    urlcolor = black
+}
+
+% Create command for blank page not incrementing page count
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+
+% Change paragraph to be like section
+\titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1em}
+
+% Remove indent
+\setlength\parindent{0pt} % Remove indent
+
+% Insert smaller source for image with \source{}
+\newcommand{\source}[1]{\vspace{-4pt} \caption*{\hfill \footnotesize{Source: {#1}}}}
+
+% Prettify algorithms
+\renewcommand\algorithmicthen{} % Removes "then" from algorithms
+\renewcommand\algorithmicendif{\vspace{-1em}} % Removes "end if"
+
+% Create black h-line
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+% Removal of report style "Chapter x"
+\titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Large}
+\titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter.}{0.5em}{}
+
+% Floating environment numbering
+\counterwithin{figure}{section} % Figure numbering reset for each section
+\counterwithin{table}{section} % Table numbering reset for each section
+\counterwithin{equation}{section} % Equation numbering reset for each section
+\counterwithin{algorithm}{section} % Algorithm numbering reset for each section
+
+% Algorithm autorefname
+\newcommand{\algorithmautorefname}{Algorithm}
+
+% \Autoref for capitalizing, \autoref standard with lowercase for every ref except for floats
+\newcommand{\Autoref}[1]{%
+  \begingroup%
+  \def\chapterautorefname{Chapter}%
+  \def\sectionautorefname{Section}%
+  \def\subsectionautorefname{Subsection}%
+  \def\paragraphautorefname{Paragraph}%
+  \autoref{#1}%
+  \endgroup%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%   Main matter   %%
+%%%%%%%%%%%%%%%%%%%%%
+% This is the main part of the paper.
+\newcommand{\mainmatter}{
+    \newpage
+    \pagenumbering{arabic}  % Setting page numbering to normal integers
+}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%   Page setup   %%
+%%%%%%%%%%%%%%%%%%%%
+\usepackage[a4paper, total={150mm, 245mm,footskip = 14mm}]{geometry}
+\setlength{\parskip}{0.8em} % Customized header and footer
+\pagestyle{fancy}
+\fancyhead{} % Clears header
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter\ #1}}{}} % Removes left "chapter"
+\renewcommand{\sectionmark}[1]{\markright{\thesection ~ \ #1}} % Remove right post-dot
+\fancyhead[LE]{\nouppercase{\textit{\leftmark}}} % Puts chapter title on even page in lower-case italics
+\fancyhead[RO]{\nouppercase{\textit{\rightmark}}} % Puts section title on odd page in lower-case italics
+\renewcommand{\headrulewidth}{0pt} % Gets rid of line
+
+
