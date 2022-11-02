@@ -125,7 +125,7 @@ def main(path: str, template: bool, subject: str, title: str, author: str, date:
     print(f"Template: {template_path.name.replace('_', ' ')}")
 
     # Generate project based on template
-    if Path(template_path).name == "assignment_report":
+    if Path(template_path).name == "Assignment":
         if not subject:
             subject = input("Subject: ")
         if not title:
@@ -140,10 +140,10 @@ def main(path: str, template: bool, subject: str, title: str, author: str, date:
             date_input = input("Date (leave blank for automatic insert): ")
             if not date_input.isspace():  # If not just space characters, skip if empty
                 date = date_input
-        create_latex_project_based_on_template(path, template_path, "report", True, subject, title, author, date)
+        create_latex_project_based_on_template(path, template_path, "LaTeX", True, subject, title, author, date)
 
-    elif Path(template_path).name == "thesis":
-        create_latex_project_based_on_template(path, template_path, "thesis")
+    elif Path(template_path).name == "Thesis":
+        create_latex_project_based_on_template(path, template_path, "LaTeX")
 
 
 if __name__ == "__main__":

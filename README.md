@@ -70,7 +70,7 @@ If you want to change the default template, simply run `setuplatex --set-default
 </details>
 
 
-### Assignment report (default)
+### Assignment (default)
 
 <p float="left">
   <img src=".readme/report1.jpg" width="32%" />

@@ -36,6 +36,7 @@
 \usepackage{comment} % \comment ... \endcomment, \begin{comment} ... end{comment} will be excluded
 \usepackage{afterpage} % Needed for blankpage-generation
 \usepackage{multirow} % Create tabular cells spanning multiple rows
+\usepackage[bottom]{footmisc} % Footnotes always at bottom
 % There are multiple packages available for algorithm handling (https://tex.stackexchange.com/a/230789)
 \usepackage{algorithm} % Create a float environment for algorithms, and additional \listofalgorithms
 \usepackage{algorithmic} % Algorithm typesetting environment
@@ -114,12 +115,13 @@
 \urlstyle{sf} % tt for monospace
 
 % Define colors for hyperlinks
+% {red!40!black} yields 40% red and 60% black
+% Remove coloring with "TYPE={black}"
 \hypersetup{
     colorlinks,
-    citecolor = black,
-    filecolor = black,
-    linkcolor = black,
-    urlcolor = black
+    linkcolor={red!40!black}, % Section references and glossary
+    citecolor={red!40!black}, % Textcite and autocite
+    urlcolor={red!40!black} % URLs
 }
 
 % Create command for blank page not incrementing page count
